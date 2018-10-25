@@ -3,6 +3,7 @@
 #include <QMessageBox>
 #include <QSystemTrayIcon>
 #include <QMenu>
+#include <QSettings>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -22,6 +23,11 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(actionExit, SIGNAL(triggered()), this, SLOT(on_actionExit_triggered()));
 
     mSystemTrayIcon->setContextMenu(systemTrayMenu);
+
+    settings = new QSettings("Iris Tech", "Iris");
+
+
+
 
 }
 
@@ -59,4 +65,19 @@ void MainWindow::on_actionAboutQT_triggered()
 void MainWindow::on_pushButton_clicked()
 {
      mSystemTrayIcon->showMessage(tr("Message"), tr("Iris is the best software!"));
+}
+
+
+void MainWindow::on_HideWindowByDefault_stateChanged(int arg1)
+{
+    if (arg1==0)
+    {
+        settings->setValue("ShowOrHide", 1);
+        //this->hide();
+    }
+    else
+    {
+        settings->setValue("ShowOrHide", 0);
+       // this->hide();
+    }
 }

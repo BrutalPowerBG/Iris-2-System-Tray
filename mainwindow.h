@@ -3,6 +3,7 @@
 
 #include <QSystemTrayIcon>
 #include <QMainWindow>
+#include <QSettings>
 
 namespace Ui {
 class MainWindow;
@@ -14,6 +15,7 @@ class MainWindow : public QMainWindow
 
 public:
     explicit MainWindow(QWidget *parent = nullptr);
+    QSettings* settings;
     ~MainWindow();
 
 private slots:
@@ -27,12 +29,15 @@ private slots:
 
     void on_actionOpen_triggered();
 
+    void on_HideWindowByDefault_stateChanged(int arg1);
+
 private:
     Ui::MainWindow *ui;
     QSystemTrayIcon *mSystemTrayIcon;
     QMenu *systemTrayMenu;
     QAction* actionExit;
     QAction* actionOpen;
+
 };
 
 #endif // MAINWINDOW_H
