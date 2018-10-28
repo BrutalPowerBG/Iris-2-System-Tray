@@ -25,8 +25,26 @@ MainWindow::MainWindow(QWidget *parent) :
     mSystemTrayIcon->setContextMenu(systemTrayMenu);
 
     settings = new QSettings("Iris Tech", "Iris");
+    int showOrHide = settings->value("ShowOrHide", -1).toInt();
+    if (showOrHide==-1)
+    {
+        settings->setValue("ShowOrHide", 0);
+        hide();
+    }
+    else
+    {
+        if (showOrHide==0)
+        {
+            hide();
+            ui->HideWindowByDefault->setCheckState(Qt::Checked);
 
-
+        }
+        if (showOrHide==1)
+        {
+            show();
+            ui->HideWindowByDefault->setCheckState(Qt::Unchecked);
+        }
+    }
 
 
 }
@@ -73,11 +91,10 @@ void MainWindow::on_HideWindowByDefault_stateChanged(int arg1)
     if (arg1==0)
     {
         settings->setValue("ShowOrHide", 1);
-        //this->hide();
     }
     else
     {
         settings->setValue("ShowOrHide", 0);
-       // this->hide();
+
     }
 }
